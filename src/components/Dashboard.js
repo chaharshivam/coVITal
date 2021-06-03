@@ -5,7 +5,10 @@ import './css/dashboard.css'
 
 class Dashboard extends React.Component{
     state={
-        page:"dashboard"
+        page:"dashboard",
+        dashboardPage:"nav-link active myelement",
+        reportsPage: "nav-link myelement",
+        profilePage:"nav-link myelement"
     }
 
     onPageChange=()=>{
@@ -58,7 +61,7 @@ class Dashboard extends React.Component{
                     <div className="position-sticky pt-3">
                         <ul className="nav flex-column mt-4">
                             <li className="nav-item">
-                                <a className="nav-link active myelement" aria-current="page" href="#" onClick={e=>{this.setState({page: "dashboard"})}}>
+                                <a className={`${this.state.dashboardPage}`} aria-current="page" href="#" onClick={e=>{this.setState({page: "dashboard", reportsPage: "nav-link myelement", dashboardPage: "nav-link active myelement", profilePage: "nav-link myelement"})}}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                          fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
                                          strokeLinejoin="round" className="feather feather-home mysvg">
@@ -69,7 +72,7 @@ class Dashboard extends React.Component{
                                 </a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link myelement" href="#" onClick={e=>{this.setState({page: "report"})}}>
+                                <a className={`${this.state.reportsPage}`} href="#" onClick={e=>{this.setState({page: "report", reportsPage: "nav-link active myelement", dashboardPage: "nav-link myelement", profilePage: "nav-link myelement"})}}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                          fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
                                          strokeLinejoin="round" className="feather feather-bar-chart-2">
@@ -81,7 +84,7 @@ class Dashboard extends React.Component{
                                 </a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link myelement" href="#" onClick={e=>{this.setState({page: "profile"})}}>
+                                <a className={`${this.state.profilePage}`} href="#" onClick={e=>{this.setState({page: "profile", reportsPage: "nav-link myelement", dashboardPage: "nav-link myelement", profilePage: "nav-link active myelement"})}}>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                          fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
                                          strokeLinejoin="round" className="feather feather-users">

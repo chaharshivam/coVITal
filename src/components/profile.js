@@ -1,5 +1,5 @@
 import React from 'react';
-import AudioRecord from "./AudioRecord";
+import "./css/profileStyle.css";
 
 class Profile extends React.Component {
     render() {
@@ -12,7 +12,7 @@ class Profile extends React.Component {
                 <div className="row g-5">
                     <div className="col-md-5 col-lg-4 order-md-last">
                         <h4 className="d-flex justify-content-between align-items-center mb-3">
-                            <span className="text-primary">Profile Picture</span>
+                            <span><h3>Profile Picture</h3></span>
                         </h4>
                         <img src="..." alt="..." className="img-thumbnail"/>
                     </div>
@@ -50,31 +50,25 @@ class Profile extends React.Component {
                                 </div>
 
                                 <div className="col-12">
-                                    <label htmlFor="email" className="form-label">Email <span
-                                        className="text-muted">(Optional)</span></label>
+                                    <label htmlFor="email" className="form-label">Email</label>
                                     <input type="email" className="form-control" id="email"
                                            placeholder="you@example.com"/>
                                         <div className="invalid-feedback">
                                             Please enter a valid email address for shipping updates.
                                         </div>
                                 </div>
-
                                 <div className="col-12">
-                                    <label htmlFor="address" className="form-label">Address</label>
-                                    <input type="text" className="form-control" id="address" placeholder="1234 Main St"
-                                           required/>
-                                        <div className="invalid-feedback">
-                                            Please enter your shipping address.
-                                        </div>
+                                    <label htmlFor="address2" className="form-label">Password </label>
+                                    <input type="password" className="form-control" id="address2"
+                                           placeholder="Password"/>
                                 </div>
 
                                 <div className="col-12">
-                                    <label htmlFor="address2" className="form-label">Address 2 <span
+                                    <label htmlFor="address" className="form-label">Address <span
                                         className="text-muted">(Optional)</span></label>
-                                    <input type="text" className="form-control" id="address2"
-                                           placeholder="Apartment or suite"/>
+                                    <input type="text" className="form-control" id="address" placeholder="1234 Main St"
+                                           />
                                 </div>
-
                                 <div className="col-md-5">
                                     <label htmlFor="country" className="form-label">Country</label>
                                     <select className="form-select" id="country" required>
@@ -105,8 +99,7 @@ class Profile extends React.Component {
                                         </div>
                                 </div>
                             </div>
-                                        <button className="w-100 btn btn-primary btn-lg mt-3" type="submit">Continue to
-                                            checkout
+                                        <button className="w-100 btn btn-primary btn-lg mt-3" type="submit">Update Profile
                                         </button>
                         </form>
                     </div>
