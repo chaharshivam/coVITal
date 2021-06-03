@@ -1,6 +1,11 @@
 import React from 'react';
 import axios from "axios";
+import { Redirect } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 import './css/loginRegisterStyle.css'
+
+const cookies = new Cookies();
+
 
 
 class LoginRegister extends React.Component {
@@ -8,7 +13,9 @@ class LoginRegister extends React.Component {
     state = {
         name:"",
         email:"",
-        password:""
+        password:"",
+        redirect: false,
+        redirectLogin: false
     }
 
     componentDidMount() {
@@ -25,25 +32,45 @@ class LoginRegister extends React.Component {
         });
     }
 
-    submit = (e) => {
+    submit = async (e) => {
         e.preventDefault();
         const fd = new FormData();
         fd.append('name', this.state.name);
         fd.append('email', this.state.email);
         fd.append('password',this.state.password)
-        const user = {
-            name: this.state.name,
+
+        await axios.post('http://localhost:8080/users/register', fd);
+        this.setState({redirect: true});
+    }
+
+    onLoginSubmit = async(e) => {
+        e.preventDefault();
+        const userLogin = {
             email: this.state.email,
-            password:this.state.password
+            password: this.state.password
         }
-        axios.post('http://localhost:8080/users/register', fd).then(res => {
-            console.log(res);
-            console.log(res.data)
-        })
+
+        console.log(userLogin);
+
+        const response = await axios.post('http://localhost:8080/users/auth', userLogin,
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        cookies.set("token", response.data);
+        this.setState({redirectLogin: true});
     }
 
     render() {
-
+        if(this.state.redirect){
+            return <Redirect to="/login" />
+        }
+        if(this.state.redirectLogin){
+            return <Redirect to="/dashboard"/>
+        }
         return (
             <div className="mydivCover">
                 <div className="container mt-5 " id="container">
@@ -63,7 +90,7 @@ class LoginRegister extends React.Component {
                     </div>
 
                     <div className="form-container sign-in-container mt-2">
-                        <form action="#">
+                        <form onSubmit={this.onLoginSubmit}>
                             <h1 className="font-weight-bold">Sign in</h1>
                             <div className="social-container">
                                 <a href="#" className="social"><i className="fab fa-facebook-f"/></a>
@@ -71,9 +98,9 @@ class LoginRegister extends React.Component {
                                 <a href="#" className="social"><i className="fab fa-linkedin-in"/></a>
                             </div>
                             <span>or use your account</span>
-                            <input type="email" placeholder="Email"/>
-                            <input type="password" placeholder="Password"/>
-                            <button className="mybutton btn btn-info btn-rounded">Sign In</button>
+                            <input type="email" placeholder="Email" value={this.state.email} onChange={e=> this.setState({email: e.target.value})}/>
+                            <input type="password" placeholder="Password" value={this.state.password} onChange={e=> this.setState({password: e.target.value})}/>
+                            <button type="submit" className="mybutton btn btn-info btn-rounded">Sign In</button>
                         </form>
                     </div>
 

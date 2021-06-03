@@ -1,9 +1,9 @@
 import React from "react";
+import {BrowserRouter, Route } from 'react-router-dom';
 import HomePage from "./HomePage";
 import LoginRegister from "./LoginRegister";
 import Dashboard from "./Dashboard";
-import {BrowserRouter, Route } from 'react-router-dom';
-
+import Features from "./Features";
 
 class App extends React.Component{
     render(){
@@ -13,6 +13,7 @@ class App extends React.Component{
                 <Route path="/login" exact component={LoginRegister}/>
                 <Route path="/register" exact component={LoginRegister}/>
                 <Route path="/dashboard" exact component={Dashboard}/>
+                <Route path="/features" exact component={Features}/>
             </BrowserRouter>
         )
     }
