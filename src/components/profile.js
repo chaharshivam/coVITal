@@ -44,6 +44,53 @@ class Profile extends React.Component {
 
     }
 
+    setImage() {
+        if (this.state.profilePicturePath === null)
+            return defaultProfileImage
+        else
+            return `http://localhost:8080/${this.state.profilePicturePath}`
+    }
+
+    fileSelectedHandler = event => {
+        console.log(event.target.files);
+        console.log(URL.createObjectURL(event.target.files[0]));
+        this.setState({
+            profilePictureName: event.target.files[0].name, selectedFile: event.target.files[0],
+            changePictureOnSelect: URL.createObjectURL(event.target.files[0])
+        });
+    }
+
+    onFormSubmit = (e) => {
+        e.preventDefault();
+        const fd = new FormData();
+        if (this.state.selectedFile !== null)
+            fd.append('profilePicture', this.state.selectedFile, this.state.selectedFile.name);
+        else
+            fd.append('profilePicture', this.state.profilePictureName)
+        fd.append('firstName', this.state.firstName);
+        fd.append('lastName', this.state.lastName);
+        fd.append('userName',this.state.userName);
+        fd.append('email', this.state.email);
+        fd.append('address', this.state.address);
+        fd.append('country', this.state.country);
+        fd.append('state', this.state.state);
+        fd.append('zip', this.state.zip)
+        axios.put('http://localhost:8080/users/modify', fd)
+            .then(res => {
+                this.setState({updateStatus: true});
+                toast.success('Profile Updated Successfully', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+            }).catch(e => {
+            console.log(e);
+        })
+    }
 
 
     render() {
