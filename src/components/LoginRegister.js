@@ -42,6 +42,29 @@ class LoginRegister extends React.Component {
         fd.append('lastName', this.state.lastName);
         fd.append('email', this.state.email);
         fd.append('password',this.state.password)
+        try{
+            await axios.post('http://localhost:8080/users/register', fd);
+            // this.setState({redirect: true});
+            toast.success('Registered Successfully, You can sign now', {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }catch (e) {
+            toast.error("Please fill all the fields", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            })
+        }
     }
 
     onLoginSubmit = async(e) => {
