@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 import './css/featuresStyles.css'
 
 class Features extends React.Component {
@@ -83,7 +84,7 @@ class Features extends React.Component {
                     </symbol>
                 </svg>
                 <div className="container px-5 py-5 mt-5 mycontainer" id="featured-3">
-                    <h2 className="pb-2 border-bottom">Columns with icons</h2>
+                    <h2 className="pb-2 border-bottom">Features</h2>
                     <div className="row g-4 py-5 row-cols-1 row-cols-lg-3">
                         <div className="feature col">
                             <div className="feature-icon bg-primary bg-gradient">
@@ -91,16 +92,14 @@ class Features extends React.Component {
                                     <use xlinkHref="#collection"/>
                                 </svg>
                             </div>
-                            <h2>Featured title</h2>
-                            <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with
-                                another
-                                sentence and probably just keep going until we run out of words.</p>
-                            <a href="#" className="icon-link">
-                                Call to action
+                            <h2>Dashboard View</h2>
+                            <p>One page dashboad view for everything from recording your audio and sending it to seeing and analyzing results</p>
+                            <Link to="/dashboard" className="icon-link">
+                                <b>Try Now</b>
                                 <svg className="bi" width="1em" height="1em">
                                     <use xlinkHref="#chevron-right"/>
                                 </svg>
-                            </a>
+                            </Link>
                         </div>
                         <div className="feature col">
                             <div className="feature-icon bg-primary bg-gradient">
@@ -108,16 +107,14 @@ class Features extends React.Component {
                                     <use xlinkHref="#people-circle"/>
                                 </svg>
                             </div>
-                            <h2>Featured title</h2>
-                            <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with
-                                another
-                                sentence and probably just keep going until we run out of words.</p>
-                            <a href="#" className="icon-link">
-                                Call to action
+                            <h2>Secure</h2>
+                            <p>All the passwords are encrypted and all the user provided is completely secure on our servers</p>
+                            <Link to="/dashboard" className="icon-link">
+                                <b>Try Now</b>
                                 <svg className="bi" width="1em" height="1em">
                                     <use xlinkHref="#chevron-right"/>
                                 </svg>
-                            </a>
+                            </Link>
                         </div>
                         <div className="feature col">
                             <div className="feature-icon bg-primary bg-gradient">
@@ -125,16 +122,14 @@ class Features extends React.Component {
                                     <use xlinkHref="#toggles2"/>
                                 </svg>
                             </div>
-                            <h2>Featured title</h2>
-                            <p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with
-                                another
-                                sentence and probably just keep going until we run out of words.</p>
-                            <a href="#" className="icon-link">
-                                Call to action
+                            <h2>Customizable Interface</h2>
+                            <p> The interface of the application is customizable as per the requirement of the user and user's choice</p>
+                            <Link to="/dashboard" className="icon-link">
+                                <b>Try Now</b>
                                 <svg className="bi" width="1em" height="1em">
                                     <use xlinkHref="#chevron-right"/>
                                 </svg>
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 </div>
