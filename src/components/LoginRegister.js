@@ -3,6 +3,8 @@ import axios from "axios";
 import { Redirect } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import './css/loginRegisterStyle.css'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const cookies = new Cookies();
 
@@ -11,36 +13,21 @@ const cookies = new Cookies();
 class LoginRegister extends React.Component {
 
     state = {
-        name:"",
+        firstName:"",
+        lastName:"",
         email:"",
         password:"",
-        redirect: false,
-        redirectLogin: false
-    }
+        redirectLogin: false,
 
-    componentDidMount() {
-        const signUpButton = document.getElementById('signUp');
-        const signInButton = document.getElementById('signIn');
-        const container = document.getElementById('container');
-
-        signUpButton.addEventListener('click', () => {
-            container.classList.add('right-panel-active');
-        });
-
-        signInButton.addEventListener('click', () => {
-            container.classList.remove('right-panel-active');
-        });
     }
 
     submit = async (e) => {
         e.preventDefault();
         const fd = new FormData();
-        fd.append('name', this.state.name);
+        fd.append('firstName', this.state.firstName);
+        fd.append('lastName', this.state.lastName);
         fd.append('email', this.state.email);
         fd.append('password',this.state.password)
-
-        await axios.post('http://localhost:8080/users/register', fd);
-        this.setState({redirect: true});
     }
 
     onLoginSubmit = async(e) => {
@@ -50,24 +37,35 @@ class LoginRegister extends React.Component {
             password: this.state.password
         }
 
-        console.log(userLogin);
-
-        const response = await axios.post('http://localhost:8080/users/auth', userLogin,
-            {
-                headers: {
-                    'Content-Type': 'application/json'
+        try {
+            const response = await axios.post('http://localhost:8080/users/auth', userLogin,
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 }
-            }
-        );
+            );
+            cookies.set("token", response.data);
+            this.setState({redirectLogin: true});
+        } catch (e) {
+            toast.error("Email or password is incorrect", {
+                position: "bottom-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            })
+        }
 
-        cookies.set("token", response.data);
-        this.setState({redirectLogin: true});
     }
 
     render() {
-        if(this.state.redirect){
-            return <Redirect to="/login" />
-        }
+
+        // if(this.state.redirect){
+        //     return <Redirect to="/login" />
+        // }
         if(this.state.redirectLogin){
             return <Redirect to="/dashboard"/>
         }
@@ -78,11 +76,12 @@ class LoginRegister extends React.Component {
                         <form onSubmit={this.submit}>
                             <h1 className="font-weight-bold">Create Account</h1>
                             <div className="social-container">
-                                <a href="#" className="social"><i className="fab fa-facebook-f"/></a>
-                                <a href="#" className="social"><i className="fab fa-google-plus-g"/></a>
-                                <a href="#" className="social"><i className="fab fa-linkedin-in"/></a>
+                                <a href="/" className="social"><i className="fab fa-facebook-f"/></a>
+                                <a href="/" className="social"><i className="fab fa-google-plus-g"/></a>
+                                <a href="/" className="social"><i className="fab fa-linkedin-in"/></a>
                             </div>
-                            <input type="text" placeholder="Name" value={this.state.name} onChange={e=> this.setState({name: e.target.value})}/>
+                            <input type="text" placeholder="First Name" value={this.state.firstName} onChange={e=> this.setState({firstName: e.target.value})}/>
+                            <input type="text" placeholder="Last Name" value={this.state.lastName} onChange={e=> this.setState({lastName: e.target.value})}/>
                             <input type="email" placeholder="Email" value={this.state.email} onChange={e=> this.setState({email: e.target.value})}/>
                             <input type="password" placeholder="Password" value={this.state.password} onChange={e=> this.setState({password: e.target.value})}/>
                             <button className="mybutton btn btn-info btn-rounded" type="submit">Sign up</button>
@@ -93,9 +92,9 @@ class LoginRegister extends React.Component {
                         <form onSubmit={this.onLoginSubmit}>
                             <h1 className="font-weight-bold">Sign in</h1>
                             <div className="social-container">
-                                <a href="#" className="social"><i className="fab fa-facebook-f"/></a>
-                                <a href="#" className="social"><i className="fab fa-google-plus-g"/></a>
-                                <a href="#" className="social"><i className="fab fa-linkedin-in"/></a>
+                                <a href="/" className="social"><i className="fab fa-facebook-f"/></a>
+                                <a href="/" className="social"><i className="fab fa-google-plus-g"/></a>
+                                <a href="/" className="social"><i className="fab fa-linkedin-in"/></a>
                             </div>
                             <span>or use your account</span>
                             <input type="email" placeholder="Email" value={this.state.email} onChange={e=> this.setState({email: e.target.value})}/>
@@ -112,13 +111,24 @@ class LoginRegister extends React.Component {
                                 <button className="but" id="signIn">Sign In</button>
                             </div>
                             <div className="overlay-panel overlay-right">
-                                <h1 className="font-weight-bold">Hello, Friend!</h1>
+                                <h1 className="font-weight-bold">Hi there!</h1>
                                 <p>You don't have account yet? Don't worry! You still can join us</p>
                                 <button className="but" id="signUp">Sign Up</button>
                             </div>
                         </div>
                     </div>
                 </div>
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
             </div>
         )
     }
