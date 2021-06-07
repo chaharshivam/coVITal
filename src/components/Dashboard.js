@@ -40,7 +40,16 @@ class Dashboard extends React.Component {
             return <Profile/>
     }
 
+    onSignOut = (e) => {
+        cookie.remove('token', {path: '/'});
+
+    }
+
     render() {
+
+        if(cookie.load('token') === undefined) {
+            return <Redirect to='/login'/>
+        }
 
         return (
             <div>
