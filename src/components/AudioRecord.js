@@ -48,6 +48,26 @@ export class AudioRecord extends React.Component {
 
     onStop(recordedBlob) {
         console.log('recordedBlob is: ', recordedBlob);
+        toast.info('Audio is being uploaded', {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+
+        const fd = new FormData();
+        fd.append('audio', recordedBlob.blob);
+        axios.post('http://localhost:8080/users/audio',fd)
+            .then(res=> {
+                    console.log(res);
+                }
+            ).catch(e => {
+            console.log(e);
+        })
+
     }
 
 
