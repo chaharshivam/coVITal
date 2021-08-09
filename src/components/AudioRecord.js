@@ -2,17 +2,16 @@ import React from 'react';
 import { ReactMic } from 'react-mic';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import "./css/AudioRecord.css"
+import "./css/AudioRecord.css";
+import {Button, Modal} from "react-bootstrap";
 import axios from "axios";
 
-export class AudioRecord extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
+class AudioRecord extends React.Component {
+        state = {
             record: false,
-            button: "btn btn-primary mybutton disabled"
+            button: "btn btn-primary mybutton disabled",
+            result: ""
         }
-    }
 
     startRecording = () => {
         this.setState({ record: true, button:"btn btn-primary mybutton" });
@@ -46,7 +45,7 @@ export class AudioRecord extends React.Component {
         console.log('chunk of real-time data is: ', recordedBlob);
     }
 
-    onStop(recordedBlob) {
+    onStop=(recordedBlob)=> {
         console.log('recordedBlob is: ', recordedBlob);
         toast.info('Audio is being uploaded', {
             position: "bottom-right",
@@ -63,6 +62,8 @@ export class AudioRecord extends React.Component {
         axios.post('http://localhost:8080/users/audio',fd)
             .then(res=> {
                     console.log(res);
+                    this.setState({result: res.data});
+                    console.log(this.state.result);
                 }
             ).catch(e => {
             console.log(e);
@@ -70,6 +71,25 @@ export class AudioRecord extends React.Component {
 
     }
 
+    handleModal(){
+        this.setState({result : ""})
+    }
+
+    showResults=()=>{
+        return(
+            <Modal show={this.state.result}>
+                <Modal.Header><b>Response from server</b></Modal.Header>
+                <Modal.Body>
+                    {this.state.result}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={()=>{this.handleModal()}}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+        )
+    }
 
     render() {
         return (
@@ -98,6 +118,7 @@ export class AudioRecord extends React.Component {
                         Last checked 2 days ago
                     </div>
                 </div>
+                {this.showResults()}
                 <ToastContainer
                     position="bottom-right"
                     autoClose={5000}
